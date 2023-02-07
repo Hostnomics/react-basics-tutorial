@@ -366,3 +366,200 @@ const App = () => {
 
 
 
+### Use Props to Create Reusable Components
+
+```js
+
+const Player = (props) => {
+    return (     
+        <div className="player">
+            <span className="player-name">
+                {/* Hal Finney */}
+                {props.name}
+            </span>
+
+            <Counter score={props.score}/>
+
+        </div>
+    );
+}
+
+
+const Counter = (props) => {
+    return (
+        <div className="counter">
+            <button className="counter-action decrement"> - </button>
+                <span className="counter-score">{ props.score }</span>
+            <button className="counter-action increment"> + </button>
+        </div>
+    );
+}
+
+
+const App = () => {
+    return (
+        <div className="scoreboard">
+            <Header title="Scoreboard 2.0" totalPlayers={38 + 3} />
+            {/* <Header title="Scoreboard 2.0" totalPlayers={ n => n + 10} /> */}
+
+            {/* Players List */}
+            <Player name="Hal Finney" score={50} />
+            <Player name="Treasure" score={90} />
+            <Player name="Ashley" score={85} />
+            <Player name="James" score={80} />
+
+        </div>
+    ); 
+}
+
+```
+
+
+
+### Using map() with React
+
+[Iterating and Rendering with map()](https://teamtreehouse.com/library/react-basics-2/iterating-and-rendering-with-map).
+
+
+Now instead of manually setting our four players we'll pass them through as if they were JSON: 
+
+
+```js
+
+// Original App Component
+const App = () => {
+    return (
+        <div className="scoreboard">
+            <Header title="Scoreboard 2.0" totalPlayers={38 + 3} />
+            {/* <Header title="Scoreboard 2.0" totalPlayers={ n => n + 10} /> */}
+
+            {/* Players List */}
+            <Player name="Hal Finney" score={50} />
+            <Player name="Treasure" score={90} />
+            <Player name="Ashley" score={85} />
+            <Player name="James" score={80} />
+
+        </div>
+    ); 
+}
+
+//Add this to the top of app.js
+const players = [
+    {
+        name: "Guil",
+        score: 50
+    },
+    {
+        name: "Treasure",
+        score: 50
+    },{
+        name: "Ashley",
+        score: 85
+    },{
+        name: "James",
+        score: 80
+    }
+];
+
+```
+
+Then we pull in the `players` json data by defining the prop in for PARENT App Component in the Render. 
+
+```js
+
+const players = [
+    {
+        name: "Guil",
+        score: 50
+    },
+    {
+        name: "Treasure",
+        score: 50
+    },{
+        name: "Ashley",
+        score: 85
+    },{
+        name: "James",
+        score: 80
+    }
+];
+
+//define the App prop "initialPlayers={players}" in render:
+ReactDOM.render(
+    // <App />,
+    <App initialPlayers={players} />,
+    document.getElementById('root')
+);
+
+// Then map over the players array in the App Component: 
+const App = (props) => {
+    return (
+        <div className="scoreboard">
+            <Header title="Scoreboard 2.0" totalPlayers={props.initialPlayers.length} />
+
+                {/* Players List */}
+                {props.initialPlayers.map( player =>
+                    // <Player name="Hal" score={50} />
+                    <Player 
+                        name={player.name}
+                        score={player.score}                
+                    />                              
+                )}
+
+        </div>
+    ); 
+}
+
+//NOTE: The prop we defined in render can be used by ANY child Component, so 
+// RENDER => App => Header Component, to call .length on to get the total number of players
+     <Header title="Scoreboard 2.0" totalPlayers={props.initialPlayers.length} />
+
+
+```
+
+
+
+**REVIEW: app.js Parent Tree**
+
+
+1. App Component
+    - Header
+    - Player
+        - Counter 
+
+Define the props in the **PARENT Component** and then display the props as desired in the **CHILD Component**. 
+
+
+
+
+### Using Keys to Keep Track of Elements
+
+Dev tools presents the warning `WARNING: Each child in an array or iterator should have a unique "key" prop.`
+
+[Using Keys to Track Elements](https://teamtreehouse.com/library/react-basics-2/use-keys-to-keep-track-of-elements).
+
+**KEY**: _A unique identifier that gives React a way to quickly and reliably identify an element in the list._
+
+We need to keep track of each child item, so using a unique key allows us to track them across the DOM. 
+(_Sort of like DCT pt list when refreshing to a specific ID_)
+
+Example: 
+[html]
+    <ul>
+        <li>Task 1</li>
+        <li>Task 2</li> <!-- When -->
+        <li>Task 3</li>
+        <li>Task 4</li>
+    </ul>
+
+[/html]
+
+So we'll add an ID property to each player in our `players` array manually for now. Later we'll cover how to automatically generate **unique keys** for each player/object. 
+
+
+
+## SECTION FOUR `Understanding State`
+
+
+[What is State?](https://teamtreehouse.com/library/react-basics-2/what-is-state).
+

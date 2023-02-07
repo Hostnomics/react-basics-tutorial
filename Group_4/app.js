@@ -77,7 +77,7 @@ const Counter = (props) => {
 const App = (props) => {
     return (
         <div className="scoreboard">
-            <Header title="Scoreboard 2.0" totalPlayers={props.initialPlayers.length} />
+            <Header title="Scoreboard Group 4" totalPlayers={props.initialPlayers.length} />
             {/* <Header title="Scoreboard 2.0" totalPlayers={ n => n + 10} /> */}
 
             {/* Players List */}
@@ -89,17 +89,11 @@ const App = (props) => {
                 />                              
             )}
  
-        {/* <Player name="Hal Finney" score={50} />
-            <Player name="Treasure" score={90} />
-            <Player name="Ashley" score={85} />
-            <Player name="James" score={80} /> */}
-
         </div>
     ); 
 }
 
 ReactDOM.render(
-    // <App />,
     <App initialPlayers={players} />,
     document.getElementById('root')
 );
