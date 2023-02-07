@@ -71,7 +71,7 @@ function Header(){
 ```
 
 
-#### Use a Component with JSX
+### Use a Component with JSX
 
 [Render our Header function to the dom](https://teamtreehouse.com/library/react-basics-2).
 
@@ -97,7 +97,7 @@ ReactDOM.render(
 
 
 
-#### Arrow Functions
+### Arrow Functions
 
 [Components as Arrow Functions](https://teamtreehouse.com/library/react-basics-2/components-as-arrow-functions). 
 
@@ -231,5 +231,138 @@ const App = () => {
 }
 
 ```
+
+
+
+## Section 3: Introducing Props
+
+Props look like custom html attributes that add information to the tag. 
+
+[Setting and Using Props](https://teamtreehouse.com/library/react-basics-2/setting-and-using-props).
+
+**Props**
+- A list of properties used to pass data to a component. Components are customized and made reusable with props. 
+    - Add functionality to a component. 
+    - Define the props in a component's JSX tag
+    - Enable the use of props in a component. 
+    - Every react component has a list of props with the attributes given to it. 
+
+**You pass the props in the JSX tag where the component is USED, NOT defined**
+```js
+//Header Component Defined:
+const Header = () => {  
+    return (
+        <header>
+            <h1>Scoreboard</h1>
+                <span className="stats">Players: 1</span>         
+        </header>
+    );
+}
+
+//Header Component USED (in App Component):
+// Props other than a string are passed with curly brackets {}
+const App = () => {
+    return (
+        <div className="scoreboard">
+            <Header title="Scoreboard 2.0" totalPlayers={1} />
+
+            {/* Players List */}
+            <Player />
+
+        </div>
+    ); 
+}
+
+```
+
+
+We pass the parameter we'll call `props` to the Header component: [See 4:13](https://teamtreehouse.com/library/react-basics-2/setting-and-using-props).  (You can call parameter whatever you want, we'll stick with `props`).
+
+```js
+const Header = (props) => {  
+    return (
+        <header>
+            <h1>Scoreboard</h1>
+                <span className="stats">Players: 1</span>         
+        </header>
+    );
+}
+
+
+```
+
+JSX accepts javascript expressions {}
+
+**CAN NOT JUST DO** `props.title`
+
+**SO WE DEFINE THE "variables" IN THE APP COMPONENT, AND THEN CALL THEM IN THE HEADER COMPONENT as a JavaScript Expression {}**
+```js
+
+//props.title and props.totalPlayers Displayed in the Header Component: 
+const Header = (props) => {  
+    return (
+        <header>
+            {/* <h1>Scoreboard</h1> */}
+            <h1>{ props.title }</h1>
+                <span className="stats">Players: {props.totalPlayers}</span>         
+        </header>
+    );
+}
+
+//props.title and props.totalPlayers defined in App Component: 
+const App = () => {
+    return (
+        <div className="scoreboard">
+            <Header title="Scoreboard 2.0" totalPlayers={38} />
+
+            {/* Players List */}
+            <Player />
+
+        </div>
+    ); 
+}
+
+```
+
+We can do **Math in the JavaScript Expression**
+```js
+ <Header title="Scoreboard 2.0" totalPlayers={38 + 2} />
+```
+
+We can eve **pass in a function into the JavaScript Expression {}**, here we'll pass in an arrow function that takes a number and adds 10 to it: 
+```js
+<Header title="Scoreboard 2.0" totalPlayers={ n => n + 10} />
+
+//In Header Component: 
+const Header = (props) => {  
+    return (
+        <header>
+            {/* <h1>Scoreboard</h1> */}
+            <h1>{ props.title }</h1>
+                {/* <span className="stats">Players: {props.totalPlayers}</span>    */}
+                <span className="stats">Players: {props.totalPlayers(28) }</span>       
+        </header>
+    );
+}
+
+//In App Component: 
+const App = () => {
+    return (
+        <div className="scoreboard">
+            {/* <Header title="Scoreboard 2.0" totalPlayers={38 + 3} /> */}
+            <Header title="Scoreboard 2.0" totalPlayers={ n => n + 10} />
+
+            {/* Players List */}
+            <Player />
+
+        </div>
+    ); 
+}
+
+```
+
+
+**Remember** the parent component (_here, App_) is the only one who can **set** the props. The **children components**, (_here, Header_), can only **read** the props [as further explained here.](https://teamtreehouse.com/library/react-basics-2/components-and-props).
+
 
 
