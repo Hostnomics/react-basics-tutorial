@@ -547,7 +547,7 @@ Example:
 [html]
     <ul>
         <li>Task 1</li>
-        <li>Task 2</li> <!-- When -->
+        <li>Task 2</li> <!-- remove li for task 2 -->
         <li>Task 3</li>
         <li>Task 4</li>
     </ul>
@@ -562,4 +562,84 @@ So we'll add an ID property to each player in our `players` array manually for n
 
 
 [What is State?](https://teamtreehouse.com/library/react-basics-2/what-is-state).
+
+- Data in state is not read only
+- Data in state is distributed through props
+
+
+**CHANGES WE HAVE TO MAKE TO USE STATE**: _State_ can **only** be used with components that are **Class Components**.
+
+So we have to convert our FUNCTION components to CLASS components. 
+
+[Create a Component as a Class](https://teamtreehouse.com/library/react-basics-2/create-a-component-as-a-class). 
+
+TWO ways to create Components in React
+1. Functions
+2. Classes
+
+We've been using **stateless functional components** thus far. 
+
+Example of **Stateless Functional Component**: 
+- It just takes a single parameter which we called `props`
+
+```js
+const Counter = (props) => {
+    return (
+        <div className="counter">
+            <button className="counter-action decrement"> - </button>
+                <span className="counter-score">{ props.score }</span>
+            <button className="counter-action increment"> + </button>
+        </div>
+    );
+}
+```
+
+Class Components offer a more powerful way to build components: 
+ES16 Class Syntax
+
+The **only method** you need to define in a **class component** is `render(){}`
+Then you move the component functionality into render
+```js
+// const Counter = (props) => {
+class Counter extends React.Component {
+    render(){
+        return (
+            <div className="counter">
+                <button className="counter-action decrement"> - </button>
+                    <span className="counter-score">{ props.score }</span>
+                <button className="counter-action increment"> + </button>
+            </div>
+        );
+    }
+}
+
+```
+
+When working with **Class Components** we change the way we reference our `JSX Expression` `{ props.score }` by using the `this` keyword.
+
+```js
+//previous: (stateless functional component )
+<span className="counter-score">{ props.score }</span>
+
+//becomes: (class component)
+<span className="counter-score">{ this.props.score }</span>
+
+```
+
+In **Class Components** `props` are not accessed through arguments like they are with **functional components**. 
+
+`props` are a property of the **component** itself which we access through the React API (`React.Component`)
+
+`this` keyword refers to the _component_ **_instance**_. 
+
+
+#### When do you use a CLASS component verus a FUNCTION?
+[3:10](https://teamtreehouse.com/library/react-basics-2/create-a-component-as-a-class). 
+
+1. If a component is ONLY receiving INPUT through props and rendering UI, it is best to use a function or a _stateless functional component_. Functions are easier to write, read and understand.
+    - functions are really just the render method of a **class component**. 
+2. When you want to add STATE, that is when you use a **class component**. 
+    - However you can also create stateless components as classes, (making it easier to convert from stateLESS to stateFUL later if needed).
+
+
 
