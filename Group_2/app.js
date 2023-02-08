@@ -15,7 +15,7 @@
 const Header = () => {  
     return (
         <header>
-            <h1>Scoreboard</h1>
+            <h2>Hardcoded Scoreboard Group 2</h2>
                 <span className="stats">Players: 1</span>         
         </header>
     );

@@ -2,7 +2,8 @@ const players = [
     {
         name: "Hal Finney",
         score: 1000, 
-        id: 1
+//ID's added to the players Property Object (1:12): https://teamtreehouse.com/library/react-basics-2/use-keys-to-keep-track-of-elements
+        id: 1 
     },
     {
         name: "McLovin",
@@ -32,7 +33,6 @@ const players = [
         score: 99, 
         id: 7
     }
-
 ];
 
 
@@ -77,7 +77,7 @@ const Counter = (props) => {
 const App = (props) => {
     return (
         <div className="scoreboard">
-            <Header title="Scoreboard 2.0" totalPlayers={props.initialPlayers.length} />
+            <Header title="Scoreboard Group 3" totalPlayers={props.initialPlayers.length} />
             {/* <Header title="Scoreboard 2.0" totalPlayers={ n => n + 10} /> */}
 
             {/* Players List */}
@@ -85,10 +85,12 @@ const App = (props) => {
                 // <Player name="Hal" score={50} />
                 <Player 
                     name={player.name}
-                    score={player.score}                
+                    score={player.score}      
+ // At (1:31) Added key prop: https://teamtreehouse.com/library/react-basics-2/use-keys-to-keep-track-of-elements
+                    key={player.id.toString()}
                 />                              
             )}
- 
+
         {/* <Player name="Hal Finney" score={50} />
             <Player name="Treasure" score={90} />
             <Player name="Ashley" score={85} />

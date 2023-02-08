@@ -89,9 +89,6 @@ class Counter extends React.Component {
 
 
 
-## Previous State
+## Previous State (*_See Group_4_c_setState_Callback_Fn*__ Folder)
 
 [Update State Based on Previous State](https://teamtreehouse.com/library/react-basics-2/update-state-based-on-previous-state).
-
-
-

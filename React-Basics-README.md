@@ -540,6 +540,8 @@ Dev tools presents the warning `WARNING: Each child in an array or iterator shou
 
 **KEY**: _A unique identifier that gives React a way to quickly and reliably identify an element in the list._
 
+![Unique Key Warning From React](https://i.imgur.com/U2K2fz5.png)
+
 We need to keep track of each child item, so using a unique key allows us to track them across the DOM. 
 (_Sort of like DCT pt list when refreshing to a specific ID_)
 
@@ -555,6 +557,85 @@ Example:
 [/html]
 
 So we'll add an ID property to each player in our `players` array manually for now. Later we'll cover how to automatically generate **unique keys** for each player/object. 
+
+
+Add key to each `player` Property Object (_the JSON_)
+
+```js
+const players = [
+    {
+        name: "Hal Finney",
+        score: 1000, 
+        id: 1 
+    },
+    {
+        name: "McLovin",
+        score: 69, 
+        id: 2
+
+    },{
+        name: "Ashley",
+        score: 85, 
+        id: 3
+    }
+];
+
+```
+
+Then at [1:31](https://teamtreehouse.com/library/react-basics-2/use-keys-to-keep-track-of-elements). in our **map function** where we create our players in the **App Function Component**, we pass the `<Player />` component tag a new prop called `players`. 
+
+```js
+
+const players = [
+    {
+        name: "Hal Finney",
+        score: 1000, 
+        id: 1 
+    },
+    {
+        name: "McLovin",
+        score: 69, 
+        id: 2
+    }
+];
+
+const App = (props) => {
+    return (
+        <div className="scoreboard">
+            <Header title="Scoreboard 2.0" totalPlayers={props.initialPlayers.length} />
+            {/* <Header title="Scoreboard 2.0" totalPlayers={ n => n + 10} /> */}
+
+            {/* Players List */}
+            {props.initialPlayers.map( player =>
+                // <Player name="Hal" score={50} />
+                <Player 
+                    name={player.name}
+                    score={player.score}      
+                    key={player.id.toString()}
+                />                              
+            )}
+
+        </div>
+    ); 
+}
+
+```
+
+**THE REACT DOCS RECOMMEND** that we use a **string** as the **key value**.
+
+So to convert our **key id** to a **string** use call JavaScript's `toString()` method on it: 
+```js
+//original: 
+  key={player.id}
+//with .toStirng() method called on it: 
+  key={player.id.toString()}
+
+```
+(_In the next lesson, we'll auto generate the keys_)
+
+We **Need Keys** when we are iterating over a data set that we'll be rendering to the UI and addding/removing etc. 
+
+See the [updated Group 3 app.js file here](https://github.com/Hostnomics/react-basics-tutorial/blob/main/Group_3/app.js).
 
 
 
@@ -712,4 +793,97 @@ class Counter extends React.Component {
 ## Events
 
 [Handling Events](https://teamtreehouse.com/library/react-basics-2/handling-events).
+
+**FUNCTIONALITY FOR PLUS/MINUS SCORE BUTTONS**
+1. Add event handler to update state using React's built in `update state` method
+2. Give buttons (+/-) an onClick() event that calls the event handler when clicked.
+    - Whenever the score state gets updated, react will re-render our component to the UI.
+    - x
+
+
+
+**Add incrementScore Method() and hook up to + button with JavaScript's bind() method**
+
+```js
+// New method to increment score in Counter Class Component:
+    incrementScoreMethod() {
+        this.setState({
+            score: this.state.score + 1
+        });
+    }
+
+// Pass `this` to our incrementScoreMethod using JavaScript's bind() method passing in this in React's onClick handler
+{/* See: https://teamtreehouse.com/library/react-basics-2/handling-events */}
+<button className="counter-action increment" onClick={ this.incrementScoreMethod.bind(this) }> + </button>
+
+
+//increment (+) button located in render: 
+    render(){
+        return (
+            <div className="counter">
+                <button className="counter-action decrement"> - </button>
+                    {/* Updated this.state.score in https://teamtreehouse.com/library/react-basics-2/create-a-stateful-component */}
+                    {/* <span className="counter-score">{ this.props.score }</span> */}
+                    <span className="counter-score">{ this.state.score }</span>
+
+                    {/* Added in: https://teamtreehouse.com/library/react-basics-2/handling-events */}
+                <button className="counter-action increment" onClick={ this.incrementScoreMethod.bind(this) }> + </button>
+            </div>
+        );
+    }
+```
+
+**COMPLETE UPDATE TO Counter Class Component:**
+```js
+
+// Complete Counter Class: 
+class Counter extends React.Component {
+
+    state = {
+        score: 0
+    };
+
+    incrementScoreMethod() {
+        //console.log("Plus Button Has Been Clicked");
+        console.log(this); // console logs `Undefined` without .bind(this) in the + button's onClick handler below.  
+        this.setState({
+            //like score = score + 1;
+            score: this.state.score + 1
+        });
+    }
+
+    decrementScoreMethod(){
+        console.log(this);
+        this.setState({
+            //like score = score - 1; 
+            score: this.state.score - 1
+        }); 
+    }
+
+// Added class render in https://teamtreehouse.com/library/react-basics-2/create-a-component-as-a-class
+    render(){
+        return (
+            <div className="counter">
+                <button className="counter-action decrement" onClick={ this.decrementScoreMethod.bind(this) }> - </button>
+                    {/* Use state instead of props https://teamtreehouse.com/library/react-basics-2/create-a-stateful-component */}
+                    {/* <span className="counter-score">{ this.props.score }</span> */}
+                    <span className="counter-score">{ this.state.score }</span>
+
+                    {/* See: https://teamtreehouse.com/library/react-basics-2/handling-events */}
+                <button className="counter-action increment" onClick={ this.incrementScoreMethod.bind(this) }> + </button>
+            </div>
+        );
+    }
+}
+
+
+```
+
+
+
+## Previous State [(*_See Group_4_c_setState_Callback_Fn*__ Folder)]().
+
+[Update State Based on Previous State](https://teamtreehouse.com/library/react-basics-2/update-state-based-on-previous-state).
+
+
 
