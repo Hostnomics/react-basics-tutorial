@@ -643,3 +643,73 @@ In **Class Components** `props` are not accessed through arguments like they are
 
 
 
+### Create a Component with State
+
+[Create a Stateful Component](https://teamtreehouse.com/library/react-basics-2/create-a-stateful-component).
+
+
+We add state to our `Counter Class Component` in a constructor. 
+
+Inside the `Counter class component` we use `super()` to call the (_parent_) Constructor of the `React.Component Class` we are extending. (which allows us to the use the `this` keyword in the `Counter` _Class Constructor_).
+
+
+However, the local class constructor() and supser() Can be rewritten as simply state = {}
+[See 3:33](https://teamtreehouse.com/library/react-basics-2/create-a-stateful-component).
+
+```js
+class Counter extends React.Component {
+
+// Using constructor() and super()
+    constructor(){
+        super()
+            this.state = {
+                // Initalized State (when first mounts) set to the score we want to display for each player
+                score: 0
+            };        
+    }  
+//With the BABEL COMPILER it will REWRITE the above with simply state = {};
+    state = {
+        score: 0
+    };
+}
+```
+
+
+**SUMMARY OF CHANGES TO Counter CLASS**
+```js
+// const Counter = (props) => {
+class Counter extends React.Component {
+
+// Added State: https://teamtreehouse.com/library/react-basics-2/create-a-stateful-component
+    constructor(){
+        super()
+            this.state = {
+                // Initalized State (when first mounts) set to the score we want to display for each player
+                score: 0
+            };        
+    }  
+
+    //The local class constructor() and supser() Can be rewritten as simply state = {};
+    // state = {score: 0};
+
+// Added class render in https://teamtreehouse.com/library/react-basics-2/create-a-component-as-a-class
+    render(){
+        return (
+            <div className="counter">
+                <button className="counter-action decrement"> - </button>
+                    {/* Updated this.state.score in https://teamtreehouse.com/library/react-basics-2/create-a-stateful-component */}
+                    {/* <span className="counter-score">{ this.props.score }</span> */}
+                    <span className="counter-score">{ this.state.score }</span>
+                <button className="counter-action increment"> + </button>
+            </div>
+        );
+    }
+}
+
+```
+
+
+## Events
+
+[Handling Events](https://teamtreehouse.com/library/react-basics-2/handling-events).
+

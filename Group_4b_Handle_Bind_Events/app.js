@@ -63,14 +63,43 @@ const Player = (props) => {
 }
 
 
-// const Counter = (props) => {
 class Counter extends React.Component {
+// Added State: https://teamtreehouse.com/library/react-basics-2/create-a-stateful-component
+    state = {
+        score: 0
+    };
+
+//Add incrementScore Method & bind `this` in render with JavaScript's bind() method: https://teamtreehouse.com/library/react-basics-2/bind-event-handlers-to-components
+    //Complete incrementScoreMethod in: https://teamtreehouse.com/library/react-basics-2/handling-events
+    incrementScoreMethod() {
+        //console.log("Plus Button Has Been Clicked");
+        console.log(this); // console logs `Undefined` without .bind(this) in the + button's onClick handler below.  
+        this.setState({
+            //like score = score + 1;
+            score: this.state.score + 1
+        });
+    }
+
+    decrementScoreMethod(){
+        console.log(this);
+        this.setState({
+            //like score = score - 1; 
+            score: this.state.score - 1
+        }); 
+    }
+
+
+// Added class render in https://teamtreehouse.com/library/react-basics-2/create-a-component-as-a-class
     render(){
         return (
             <div className="counter">
-                <button className="counter-action decrement"> - </button>
-                    <span className="counter-score">{ this.props.score }</span>
-                <button className="counter-action increment"> + </button>
+                <button className="counter-action decrement" onClick={ this.decrementScoreMethod.bind(this) }> - </button>
+                    {/* Updated this.state.score in https://teamtreehouse.com/library/react-basics-2/create-a-stateful-component */}
+                    {/* <span className="counter-score">{ this.props.score }</span> */}
+                    <span className="counter-score">{ this.state.score }</span>
+
+                    {/* React's built-in onClick event and JS's bind() method in: https://teamtreehouse.com/library/react-basics-2/handling-events */}
+                <button className="counter-action increment" onClick={ this.incrementScoreMethod.bind(this) }> + </button>
             </div>
         );
     }
@@ -80,7 +109,7 @@ class Counter extends React.Component {
 const App = (props) => {
     return (
         <div className="scoreboard">
-            <Header title="Scoreboard Group 4" totalPlayers={props.initialPlayers.length} />
+            <Header title="Scoreboard Group 4b. Events" totalPlayers={props.initialPlayers.length} />
             {/* <Header title="Scoreboard 2.0" totalPlayers={ n => n + 10} /> */}
 
             {/* Players List */}
