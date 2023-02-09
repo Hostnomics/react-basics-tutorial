@@ -48,9 +48,14 @@ const Header = (props) => {
 
 
 const Player = (props) => {
+//console log: (4:13) https://teamtreehouse.com/library/react-basics-2/remove-items-from-state
+    console.log(props.removePlayer)
     return (     
         <div className="player">
             <span className="player-name">
+                
+{/* Remove Button icon from (4:43): https://teamtreehouse.com/library/react-basics-2/remove-items-from-state */}
+                <button className="remove-player" onClick={ () => props.removePlayer(props.id) }>❌🗑️</button>
                 {/* Hal Finney */}
                 {props.name}
             </span>
@@ -174,29 +179,48 @@ class App extends React.Component {
         this.setState( prevState => {
             return {
                 // (1:10) DON'T DO THIS: players: this.state.players.filter()
-            // players: prevState.players.filter()
-            players: prevState.players.filter( p => p.id !== id )
+                        // filter() method takes a callback function
+                        //    { /* players: prevState.players.filter() */ }
+                        // The first parameter of the callback represents the current item being processed in the array
+                        // We'll call the first parameter 'p' 
+                        //    { /* players: prevState.players.filter( p ) */ }
+                        // Then we need to return ALL player objects in state EXCEPT for the one we want to remove. 
+                        // The way we do that is with the player id,
+                        // SO we RETURN player id with `p.id' NOT STRICTLY EQUAL TO id
+                           players: prevState.players.filter( p => p.id !== id )
             };
         });
     }
 
     render(){
-        return (
+// comment
+        return (          
             <div className="scoreboard">
                 {/* <Header title="Scoreboard Group 4d. Delete State" totalPlayers={props.initialPlayers.length} /> */}
                 <Header title="Scoreboard Group 4d. Delete State" totalPlayers={this.state.players.length} />
                 {/* <Header title="Scoreboard 2.0" totalPlayers={ n => n + 10} /> */}
-    
             {/* Players List */}
                 {/* {props.initialPlayers.map( player => */}
-{/* props.initialPlayers to => this.state.players @ (2:20): https://teamtreehouse.com/library/react-basics-2/creating-the-application-state */}
+    {/* props.initialPlayers to => this.state.players @ (2:20): https://teamtreehouse.com/library/react-basics-2/creating-the-application-state */}
                 {this.state.players.map( player =>
                                 // <Player name="Hal" score={50} />
+    // {/* START OF the Player Component */}
                     <Player 
                         name={player.name}
-                        score={player.score}  
-                        key={player.id.toString()}         
-                    />                              
+                        // score={player.score}  
+                        key={player.id.toString()} 
+            //Give Player a NEW PROP which we define HERE as `removePlayer={}`           
+                        // {state.players.handleRemovePlayer(player.id)}
+                        // {this.handleRemovePlayer(player.id)}
+            //CALL THE handleRemovePlayer() function HERE with the THIS KEYWORD!
+            //THE PARAMETER HAS TO MATCH THE VARIABLE DESCRIBED IN THE METHOD DEFINED ABOVE SO CREATE ANOTHER PROP CALLED `id=`
+                    //CAN'T JUST PASS IN `player.id` as the parameter!
+                        // removePlayer={this.handleRemovePlayer(player.id)}
+//REMEMBER WHEN CALLING A FUNCTION IN REACT, WE CAN'T USE BRACKETS Becase that will cause it to execute as soon as the DOM loads:
+                        id={player.id}
+                        removePlayer={this.handleRemovePlayer}                        
+                    />   
+    // {/* END OF the Player Component */}                      
                 )}
      
             </div>

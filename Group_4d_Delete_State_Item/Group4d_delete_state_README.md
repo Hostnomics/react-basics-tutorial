@@ -169,7 +169,7 @@ ___
 >A common & reliable way to remove a `player` is with the **filter() array iteration method**. 
 ---
 
-<dl>
+<d1>
   <dt>The filter() array iteration method</dt>
   <dd>filter() is used to remove elements from an array.</dd>
   <dd>without affecting the original array.</dd>
@@ -210,10 +210,189 @@ handleRemovePlayer = () => {
 
 filter() method also takes callback method
 
-When `handleRemovePlayer` is invoked, it iterates through `players array` and remove the appropriate id/ids. 
+>When `handleRemovePlayer` is invoked, it iterates through `players array` **IN STATE** and filter out **ONLY THOSE** player object whose `player.id` does NOT equal the `id` passed into our `handleRemovePlayer` method. 
+
+>Remember, we are only removeing one `id` at a time. (_When user clicks on the `x` next to the player object to be removed).
+---
+
+```js
+
+handleRemovePlayer = (id) => {
+        // callback method pass in `prevState`
+        this.setState( prevState => {
+            return {
+                // filter() method takes a callback function
+                players: prevState.players.filter()
+                // The first parameter of the callback represents the current item being processed in the array
+                // We'll call the first parameter 'p' 
+                players: prevState.players.filter( p )
+                // Then we need to return ALL player objects in state EXCEPT for the one we want to remove. 
+                // The way we do that is with the player id,
+                // SO we RETURN player id with `p.id' NOT STRICTLY EQUAL TO id
+                players: prevState.players.filter( p => p.id !== id )
+            };
+        });
+    }
+
+```
+
+
+---
+
+We call `handleRemovePlayer` in the **PLAYER COMPONENT** `<Player />`, which is placed in our **App Class Component's** `render()` method.
+```js
+    render(){
+        return (
+            <div className="scoreboard">
+
+                <Header title="Scoreboard Group 4d. Delete State" totalPlayers={this.state.players.length} />
+
+                {this.state.players.map( player =>
+
+    // {/* START OF the Player Component */}
+                    <Player 
+                        name={player.name}
+                        score={player.score}  
+                        key={player.id.toString()}         
+                    />   
+    // {/* END OF the Player Component */}                      
+                )}
+     
+            </div>
+        ); 
+    }
+
+```
+
+---
+>The `Player Function Component` is a **CHILD** of our `App Class Component`, it has access to the `handleRemovePlayer` function (_method_) we defined above in `App Class` with **PROPS**.
+<d1><h2>PROPS</h2> </d1>.
+
+---
+
+
+So next, we need to supply the `handleRemovePlayer` function to the `Player Component`
+```js
+    // {/* START OF the Player Component */}
+        <Player 
+            name={player.name}
+            score={player.score}  
+            key={player.id.toString()} 
+
+        />   
+    // {/* END OF the Player Component */} 
+
+```
+
+---
+## CALLING FUNCTIONS IN REACT, WE CAN'T USE THE BRACKETS () B/C THAT WILL CAUSE IT TO EXECUTE AS SOON AS THE DOM LOADS
+```js
+//CAN'T JUST PASS IN `player.id` as the parameter?
+    removePlayer={this.handleRemovePlayer(player.id)}
+
+//REMEMBER WHEN CALLING A FUNCTION IN REACT, WE CAN'T USE BRACKETS Becase that will cause it to execute as soon as the DOM loads:
+    id={player.id}
+    removePlayer={this.handleRemovePlayer}
+
+```
+
+---
+
+### PROPS is what React uses to pass data from Component to Component
+
+>Rember, you can pass functions through props, even data from state. 
+
+```js
+
+//IN the Player Component in App Class' render() method, we added the PROP `removePlayer:`
+    render(){
+        return (          
+            <div className="scoreboard">
+                {/* <Header title="Scoreboard Group 4d. Delete State" totalPlayers={props.initialPlayers.length} /> */}
+                <Header title="Scoreboard Group 4d. Delete State" totalPlayers={this.state.players.length} />
+                {this.state.players.map( player =>
+                    <Player 
+                        name={player.name}
+                        key={player.id.toString()} 
+                        id={player.id}
+                        removePlayer={this.handleRemovePlayer}                        
+                    />                       
+                )}
+        )
+    }
+```
+```js 
+//WE CAN ACCESS the PROP "removePlayer=" in the Player Function Component, as shown by console logging "props.removePlayer"
+const Player = (props) => {
+//console log: (4:13) https://teamtreehouse.com/library/react-basics-2/remove-items-from-state
+    console.log(props.removePlayer)
+    return (     
+        <div className="player">
+            <span className="player-name">
+                {/* Hal Finney */}
+                {props.name}
+            </span>
+
+            <Counter score={props.score}/>
+
+        </div>
+    );
+}
+
+```
+**how does this lay out `<Player >
+
+Console.log returns our `handleRemovePlayer` function:
+**Children Components `<Player />` can send data back to it's (_"parent" or original function/class_) function via props**.
+![console log removePlayer function in child component Player](https://i.imgur.com/RYy8yZ7.png)
 
 
 
+>Each Player Component has the removePlayer prop set to the the function `handleRemovePlayer`. 
 
 
+
+---
+
+### Create the Delete Player Button [04:34](https://teamtreehouse.com/library/react-basics-2/remove-items-from-state). in the Player Function Component
+
+```js
+
+//Button we added inside the span tags with emoji's from getemoji.com: 
+<button className="remove-player" onClick={ () => props.removePlayer(props.id) }>❌🗑️</button>
+
+
+//Player Function Component
+const Player = (props) => {
+//console log: (4:13) https://teamtreehouse.com/library/react-basics-2/remove-items-from-state
+    console.log(props.removePlayer)
+    return (     
+        <div className="player">
+            <span className="player-name">          
+{/* Remove Button icon from (4:43): https://teamtreehouse.com/library/react-basics-2/remove-items-from-state */}
+                <button className="remove-player" onClick={ () => props.removePlayer(props.id) }>❌🗑️</button>
+                {/* Hal Finney */}
+                {props.name}
+            </span>
+
+            <Counter score={props.score}/>
+
+        </div>
+    );
+}
+
+```
+
+
+---
 ## [Go Back to the Main Read Me File here.](https://github.com/Hostnomics/react-basics-tutorial/blob/main/React-Basics-README.md).
+
+---
+---
+
+# Next Steps: 
+Next course: [Old 2018 React Components Course available until 3/1/2023](https://teamtreehouse.com/library/react-components-2018).
+
+Updated Next Course: [Updated React Components Course](https://teamtreehouse.com/library/react-components-2/react-update).
+
+

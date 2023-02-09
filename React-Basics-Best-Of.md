@@ -175,3 +175,19 @@ ReactDOM.render(
 
 
 ```
+
+
+
+---
+## CALLING FUNCTIONS IN REACT, WE CAN'T USE THE BRACKETS () B/C THAT WILL CAUSE IT TO EXECUTE AS SOON AS THE DOM LOADS
+```js
+//CAN'T JUST PASS IN `player.id` as the parameter?
+    removePlayer={this.handleRemovePlayer(player.id)}
+
+//REMEMBER WHEN CALLING A FUNCTION IN REACT, WE CAN'T USE BRACKETS Becase that will cause it to execute as soon as the DOM loads:
+    id={player.id}
+    removePlayer={this.handleRemovePlayer}
+
+```
+---
+
