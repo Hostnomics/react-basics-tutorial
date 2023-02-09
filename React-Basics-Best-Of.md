@@ -1,14 +1,16 @@
-## Events
-
-[Handling Events](https://teamtreehouse.com/library/react-basics-2/handling-events).
-
-**FUNCTIONALITY FOR PLUS/MINUS SCORE BUTTONS**
-1. Add event handler to update state using React's built in `update state` method
-2. Give buttons (+/-) an onClick() event that calls the event handler when clicked.
-    - Whenever the score state gets updated, react will re-render our component to the UI.
-    - x
 
 
+>Testing table in MD
+
+| Section       | Link          | 
+| ------------- |:-------------:| 
+| State         | right-aligned | 
+| Binding       | centered      |   
+| setState      | are neat      |   
+| Remove setState | are neat    |   
+
+---
+## Binding 
 
 **Add incrementScore Method() and hook up to + button with JavaScript's bind() method**
 
@@ -43,7 +45,6 @@
     }
 ```
 
-**COMPLETE UPDATE TO Counter Class Component:**
 ```js
 
 // Complete Counter Class: 
@@ -91,9 +92,86 @@ class Counter extends React.Component {
 
 
 
-## Previous State (*_See Group_4_c_setState_Callback_Fn*__ Folder)
-
-[Update State Based on Previous State](https://teamtreehouse.com/library/react-basics-2/update-state-based-on-previous-state).
 
 
-## [Go Back to the Main Read Me File here.](https://github.com/Hostnomics/react-basics-tutorial/blob/main/React-Basics-README.md).
+
+## this.state.<OBJECT NAME>
+
+
+**THIS.STATE.SCORE** Example: `this.state.score`
+
+```js
+class Counter extends React.Component {
+
+    state = {
+        score: 0
+    };
+
+    render(){
+        return (
+            <div className="counter">
+
+        {/* Updated this.state.score in https://teamtreehouse.com/library/react-basics-2/create-a-stateful-component */}
+                    {/* <span className="counter-score">{ this.props.score }</span> */}
+
+                    <span className="counter-score">{ this.state.score }</span>
+
+            </div>
+        );
+    }
+}
+
+```
+
+Then again in [2:45](https://teamtreehouse.com/library/react-basics-2/creating-the-application-state).
+
+**this.state.players.**
+```js
+
+class App extends React.Component {
+
+//In (1:43): https://teamtreehouse.com/library/react-basics-2/creating-the-application-state
+    state = {
+        players: [
+            {
+                name: "Hal Finney",
+                id: 1
+            },
+            {
+                name: "McLovin",
+                id: 2        
+            }
+        ]
+    };
+
+    render(){
+        return (
+            <div className="scoreboard">
+                {/* <Header title="Scoreboard Group 4d. Delete State" totalPlayers={props.initialPlayers.length} /> */}
+                <Header title="Scoreboard Group 4d. Delete State" totalPlayers={this.state.players.length} />
+                {/* <Header title="Scoreboard 2.0" totalPlayers={ n => n + 10} /> */}
+    
+            {/* Players List */}
+                {/* {props.initialPlayers.map( player => */}
+                {this.state.players.map( player =>
+                    <Player 
+                        name={player.name}
+                        score={player.score}  
+                        key={player.id.toString()}         
+                    />                              
+                )}
+     
+            </div>
+        ); 
+    }
+} //End of App Class
+
+ReactDOM.render(
+    //Remove the `initialPlayers={players} prop because we are using STATE now.
+    // <App initialPlayers={players} />,
+    <App />,
+    document.getElementById('root')
+);
+
+
+```
