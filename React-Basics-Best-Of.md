@@ -191,3 +191,64 @@ ReactDOM.render(
 ```
 ---
 
+
+## React Hook: setState()
+
+```js
+
+//New way to set state
+//In (1:43): https://teamtreehouse.com/library/react-basics-2/creating-the-application-state
+    // state = {
+    //     players: [
+    //         {
+    //             name: "Hal Finney",
+    //             // score: 1000, 
+    //             id: 1
+    //         },
+    //         {
+    //             name: "McLovin",
+    //             // score: 69, 
+    //             id: 2
+        
+    //         }
+    //     ]
+    // };
+//Set state with React.useState() at (8:53): https://teamtreehouse.com/library/react-components-2/react-update
+    // BASIC FORMAT: const [] = React.useState();
+    const [players, setPlayers] = React.useState([
+        {
+            name: "Hal Finney",
+            // score: 1000, 
+            id: 1
+        },
+        {
+            name: "McLovin",
+            // score: 69, 
+            id: 2
+    
+        },{
+            name: "Ashley",
+            // score: 85, 
+            id: 3
+        },{
+            name: "Austin",
+            // score: 100, 
+            id: 4
+        },{
+            name: "Hortzberg",
+            // score: 79, 
+            id: 5
+        }, 
+        {
+            name: "Sebastian",
+            // score: 63,
+            id: 6 
+        },
+        {
+            name: "Mondreau",
+            // score: 99, 
+            id: 7
+        }
+    ]);
+
+```

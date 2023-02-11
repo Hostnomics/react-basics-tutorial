@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Scoreboard</title>
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+ 
+  <body>
+<!--    Everything inside the id=root div gets replaced. -->    
+    <div id="root"></div> 
+
+ <!--CDN Links from: https://reactjs.org/docs/cdn-links.html -->   
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+<!--    Babel Standalone Script Tag Updated (2:32): https://teamtreehouse.com/library/react-components-2/react-update#notes -->
+    <!-- <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    
+<!--Add type='text/babel' to the app.js script tag-->
+<!--    This tells babel that the JS in App.js needs to be compiled.-->
+<!--    In production you would not use this, You would have a build system set up to compile it in a tool like webpack before serving it to the browser.-->
+<!--    <script src="./app.js"></script>-->
+    <script type="text/babel" src="./app.js"></script>
+    
+  </body>
+</html>
