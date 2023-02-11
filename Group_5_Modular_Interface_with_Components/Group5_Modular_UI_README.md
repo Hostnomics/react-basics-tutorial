@@ -171,3 +171,43 @@ This was working for me
     ]);
 
 ```
+
+
+**UPDATE APP'S HELPER FUNCTION ***
+
+```js
+//ORIGINAL handleRemovePlayer (when App was a CLASS)
+handleRemovePlayer = (id) => {
+            setPlayers(prevState.players.filter( p => p.id !== id )); 
+        // this.setState({});
+        this.setState( prevState => {
+            return {
+                // (1:10) DON'T DO THIS: players: this.state.players.filter()
+                        // filter() method takes a callback function
+                        //    { /* players: prevState.players.filter() */ }
+                        // The first parameter of the callback represents the current item being processed in the array
+                        // We'll call the first parameter 'p' 
+                        //    { /* players: prevState.players.filter( p ) */ }
+                        // Then we need to return ALL player objects in state EXCEPT for the one we want to remove. 
+                        // The way we do that is with the player id,
+                        // SO we RETURN player id with `p.id' NOT STRICTLY EQUAL TO id
+                           players: prevState.players.filter( p => p.id !== id )
+            };
+        });
+    }
+
+// Updated HELPER FUNCTION handleRemovePlayer at (9:54): https://teamtreehouse.com/library/react-components-2/react-update
+                     //Takes ID parameter
+    // handleRemovePlayer = (id) => {
+    const handleRemovePlayer = (id) => {
+// Call setPlayers(); 
+                  //prevState.players.filter( p => p.id !== id
+        setPlayers(prevPlayers => prevPlayers.filter( p => p.id !== id )); 
+    }
+
+```
+
+---
+>Install `node.js` and `npm` to continue so we can run **npx create-react-app app-name**
+---
+
