@@ -90,8 +90,30 @@ const App = () => {
   const handleScoreChange = (id, delta) => {    
     // console.log(delta);
     console.log('id: ' + id, 'delta: ' + delta);
-    // setScore();
-  }
+    // since we don't have a SCORE state anymore we can't use setScore(); which was from const [score, setScore] = React.useState(0);
+    // Score is now a part of the PLAYER STATE, so we have to use setPlayers(); from const [players, setPlayers] = React.useState([
+      
+//can't use .filter() b/c need to return single player object. This actually removes ALL players BUT the one you tried to +/- score. 
+    // setPlayers(prevPlayers => prevPlayers.filter(p => p.id == id));
+    // setPlayers(prevPlayers = prevPlayers.filter(p => p.id == id)); //Forgot => which throws error prevPlayers undefined (b/c using `=`)
+
+//ADDED at (2:33): https://teamtreehouse.com/library/react-components-2/update-state-based-on-a-players-id
+//map over format:
+      // setPlayers(prevPlayers = prevPlayers.map(player => {}));
+      setPlayers(prevPlayers => prevPlayers.map(player => {
+          if(player.id === id){
+            return {
+              name: player.name,
+              score: player.score + delta,
+              id: player.id
+            }
+    //else{} is optional and may be left off here: 
+          }else{
+            return player;
+          }
+
+      })); 
+    }
 
 
   return (

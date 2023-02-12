@@ -169,3 +169,135 @@ We removed incrementScore and decrementScore methods from `Counter.js` and now w
 
 ```
 
+**NOW in Player.js we will pass the SCORE STATE to `<Counter />` USING PROPS**
+```js
+const Player = (props) => {
+    return (
+      <div className="player">
+        <span className="player-name">
+          <button className="remove-player" onClick={() => props.removePlayer(props.id)}>✖</button>
+          {props.name}
+        </span>
+  
+        {/* <Counter /> updated (2:31): https://teamtreehouse.com/library/react-components-2/lifting-state-up */}
+        <Counter 
+            score={ props.score } 
+            changeScore={ props.changeScore } //Added (5:05) https://teamtreehouse.com/library/react-components-2/communicating-between-components
+        />
+      </div>
+    );
+  }
+
+```
+
+---
+
+Add id to the `handleScoreChange()` method
+```js
+// Added player id as parameter in (00:13): https://teamtreehouse.com/library/react-components-2/update-state-based-on-a-players-id
+  const handleScoreChange = (id, delta) => {    
+    // console.log(delta);
+    console.log('id: ' + id, 'delta: ' + delta);
+    // setScore();
+  }
+
+```
+
+Then **ADD THE ID PROP BEING PASSED TO `<Counter />` IN Player.js**
+```js
+import React from 'react'; 
+
+//Change Counter to STATELESS (1:25): https://teamtreehouse.com/library/react-components-2/lifting-state-up
+//Counter will now take props as a parameter
+const Counter = (props) => {
+
+//Remove useState Hook in (1:25): https://teamtreehouse.com/library/react-components-2/lifting-state-up
+    // const [score, setScore] = React.useState(0);
+
+//Save Player id to variable, passed from App => Player => Counter: (1:20): https://teamtreehouse.com/library/react-components-2/update-state-based-on-a-players-id
+const id = props.id;
+
+    return (
+      <div className="counter">
+{/* player `id` added as parameter to changeScore() in (1:25): https://teamtreehouse.com/library/react-components-2/update-state-based-on-a-players-id  */}
+        <button className="counter-action decrement" onClick={() => props.changeScore(id, -1) }> - </button>
+
+        {/* <span className="counter-score">{score}</span> */}
+        <span className="counter-score">{ props.score }</span>
+
+        <button className="counter-action increment" onClick={() => props.changeScore(id, +1) }> + </button>
+
+      </div>
+    );
+  
+  }
+
+export default Counter;
+
+```
+
+## NOW WE ARE PASSING PLAYER ID TO COUNTER
+![changeScore method passing player id from App => Player => Counter](https://i.imgur.com/NVZ9WEe.png)
+
+
+Then at [1:53](https://teamtreehouse.com/library/react-components-2/update-state-based-on-a-players-id). we updated the `handleScoreChange` method in `App.js`
+
+
+
+
+**RECAP `handleScoreChange` Function**
+1. takes in id of player and delta score should change by (+1/-1)
+2. calls the setPlayers Hook function and maps through the Players array
+    - if the parameter id matches the player id in the array we rewrite the ENTIRE player object overagain but add our change to the score
+    ```js
+        name: player.name,
+        score: player.score + delta,
+        id: player.id
+    ```
+    - For the OTHER players in the array who do NOT match the parameter id, we simply return their player object. 
+    - MUST DO THIS or the app crashes. 
+    - `return player;`
+
+
+```js
+
+//Score is initialized as ZERO 0 in App.js
+const App = () => {
+  const [players, setPlayers] = React.useState([
+    {
+      name: "Guil",
+      score: 0, // Adding it here has the same efect as const [score, setScore] = React.useState(0);
+      id: 1
+    }
+    ]);
+}
+
+//The delta variable is set to be either "-1" or "+1" by the onClick handler in `Counter.js`
+<button className="counter-action decrement" onClick={() => props.changeScore(id, -1) }> - </button>
+<button className="counter-action increment" onClick={() => props.changeScore(id, +1) }> + </button>
+
+//Therefore, in the `handleScoreChange` method in App.js, we can adjust the score with 
+    score: player.score + delta (either +1 or -1)
+
+//Final Result:
+  const handleScoreChange = (id, delta) => {    
+    // console.log(delta); //returns either +1 or -1
+    console.log('id: ' + id, 'delta: ' + delta);
+
+      setPlayers(prevPlayers => prevPlayers.map(player => {
+          if(player.id === id){
+            return {
+              name: player.name,
+              score: player.score + delta,
+              id: player.id
+            }
+    //else{} is optional and may be left off here: 
+          }else{
+            return player;
+          }
+
+      })); 
+    }
+
+```
+
