@@ -1694,3 +1694,11 @@ npm start
 
 ```
 
+
+Using existing project files, (in Group_5c folder) run the `npm i` command to install the **existing project's dependencies**. 
+
+![npm i results](https://i.imgur.com/Yhg1gdW.png)
+
+1. run `npm i` to install dependencies
+2. run `npm start` to fire up the project.
+
